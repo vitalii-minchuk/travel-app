@@ -1,15 +1,16 @@
-import React, { Fragment } from "react"
-import { Grid, CssBaseline } from "@mui/material"
+import React from "react"
+import Grid from "@mui/material/Grid"
+import Container from "@mui/material/Container"
 import Header from "./components/Header/Header"
 import List from "./components/List/List"
 import Map from "./components/Map/Map"
 
 const App = () => {
   return (
-    <Fragment>
-      <CssBaseline />
+    <React.Fragment>
       <Header />
-      <Grid container spacing={3} style={{width: "100%"}}>
+      <Container maxWidth="xl">
+      <Grid container spacing={3} sx={{width: "100%"}}>
         <Grid item xs={12} md={4}>
           <List />
         </Grid>
@@ -17,7 +18,8 @@ const App = () => {
           <Map />
         </Grid>
       </Grid>
-    </Fragment>
+      </Container>
+    </React.Fragment>
   )
 }
 
