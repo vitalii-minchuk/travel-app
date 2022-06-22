@@ -5,19 +5,19 @@ import Typography from "@mui/material/Typography"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import Container from "@mui/material/Container"
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined"
-import { mapStyles } from "../../mapStyles"
-import { MiniContainer, MiniPaper } from "./styles"
+import { MiniContainer, MiniPaper, mapStyles } from "./styles"
 
+interface IMapProps  {
+  coordinates: google.maps.LatLngLiteral
+}
 
-
-const Map = () => {
-  const isMobile = useMediaQuery('(min-width:600px)')
-  const coordinates = {lat: 0, lng: 0}
+const Map: React.FC<IMapProps> = ({ coordinates }) => {
+  const isMobile: boolean = useMediaQuery('(min-width:600px)')
 
   return (
     <div style={{height: '85vh', width: '100%'}}>
       <GoogleMapReact
-        bootstrapURLKeys={{key: "AIzaSyBBCUY2oGNTb12mxArKIvNIo0eglGJfoC0"}}
+        bootstrapURLKeys={{key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY!}}
         defaultCenter={coordinates}
         center={coordinates}
         defaultZoom={14}
