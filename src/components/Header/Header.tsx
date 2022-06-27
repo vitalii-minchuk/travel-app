@@ -1,16 +1,16 @@
 import React from "react"
-import { Autocomplete } from "@react-google-maps/api"
+// import { Autocomplete } from "@react-google-maps/api"
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import SearchIcon from "@mui/icons-material/Search"
-import {Search, SearchIconWrapper, StyledInputBase} from "./styles"
+import {Search, SearchIconWrapper, StyledInputBase } from "./styles"
 
 
 const  Header: React.FC = () => {
   return (
-    <Box sx={{ flexGrow: 1, mb: 2 }}>
+    <Box sx={{ mb: 2 }}>
       <AppBar position="static">
         <Toolbar sx={{ display: "flex",
           justifyContent: "space-between",
@@ -29,15 +29,18 @@ const  Header: React.FC = () => {
             >
               Explore new places
             </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
+            {/* <Autocomplete> */}
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+            {/* </Autocomplete> */}
+            
           </Box>
         </Toolbar>
       </AppBar>

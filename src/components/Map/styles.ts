@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles"
 export const MiniContainer = styled("div")(() => ({
   position: "absolute",
   zIndex: 1,
+  
   "&:hover": {
     zIndex: 2
   },

@@ -4,16 +4,14 @@ import Container from "@mui/material/Container"
 import Header from "./components/Header/Header"
 import List from "./components/List/List"
 import Map from "./components/Map/Map"
-import { getPlacesData } from "./components/api"
-import { DataType } from "./components/types/types"
+import { getPlacesData } from "./API"
+import { DataType } from "./react-app-env"
 import { CssBaseline } from "@mui/material"
 
 const App: React.FC = () => {
-  const [places, setPlaces] = React.useState<DataType | null>(null)
-  const [coordinates, setCoordinates] = React.useState<google.maps.LatLngLiteral>({
-    lat: 52.520007,
-    lng: 13.404954
-  })
+  const [places, setPlaces] = React.useState<DataType[]>([] as DataType[])
+  const [coordinates, setCoordinates] = React.useState<google.maps.LatLngLiteral>({} as google.maps.LatLngLiteral)
+  const [bounds, setBounds] = React.useState(null)
 
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
@@ -21,17 +19,18 @@ const App: React.FC = () => {
     })
   },[])
 
-  React.useEffect(() => {
-    getPlacesData()
-      .then((data) => {
-        console.log(data)
-        //@ts-ignore
-        setPlaces(data)
+  React.useLayoutEffect(() => {
+    const getPlaces = async () => {
+      const result = await getPlacesData()
+      if(result) {
+        setPlaces(result)
+      }
+    }
 
-      })
+    getPlaces()
   }, [])
-  console.log(places)
-
+console.log(places)
+console.log(bounds, coordinates)
   return (
     <React.Fragment>
       <CssBaseline />
@@ -39,10 +38,14 @@ const App: React.FC = () => {
       <Container maxWidth="xl">
       <Grid container spacing={3} sx={{width: "100%"}}>
         <Grid item xs={12} md={4}>
-          <List />
+          <List places={places} />
         </Grid>
         <Grid item xs={12} md={8}>
-          <Map coordinates={coordinates} />
+          <Map
+            coordinates={coordinates}
+            setBounds={setBounds}
+            setCoordinates={setCoordinates}
+          />
         </Grid>
       </Grid>
       </Container>

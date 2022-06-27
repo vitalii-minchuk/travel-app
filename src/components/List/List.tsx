@@ -7,13 +7,17 @@ import InputLabel from "@mui/material/InputLabel"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import Grid from "@mui/material/Grid"
+import { DataType } from "../../react-app-env"
 
 import PlaceDetails from "../PlaceDetails/PlaceDetails"
 
+type ListProps = {
+  places: DataType[]
+}
 
-const List = ({ }) => {
+const List: React.FC<ListProps> = ({ places }) => {
   const [type, setType] = React.useState("restaurants")
-  const [rating, setRating] = React.useState("restaurants")
+  const [rating, setRating] = React.useState("0")
 
   const handleTypeChange = (event: SelectChangeEvent) => {
     setType(event.target.value)
@@ -23,8 +27,8 @@ const List = ({ }) => {
   }
 
   return (
-    <Box sx={{ height: "100%" }} >
-      <Typography variant="h5">Restaurants, Hotels and Attractions around you</Typography>
+    <Box sx={{ height: "100%", padding: "16px" }} >
+      <Typography variant="h5" component={"h2"} >Restaurants, Hotels and Attractions around you</Typography>
       <Grid container spacing={1} sx={{width: "100%"}}>
         <Grid item xs={7}>
         <FormControl sx={{ my: 2, minWidth: 120 }}>
@@ -60,23 +64,16 @@ const List = ({ }) => {
       </FormControl>
         </Grid>
       </Grid>
-      {/* <Grid container spacing={2}>
-        
+      <Grid container spacing={2} sx={{height: "60vh", overflow: "auto"}}>
         {places?.map((place, i) => (
-          <Grid key={i} item xs={12} >{place.name}</Grid>
+          <Grid key={i} item xs={12} >
+            <PlaceDetails place={place} />
+          </Grid>
         ))}
-      </Grid> */}
-      <PlaceDetails />
+      </Grid>
+      
     </Box>
   )
 }
 
-
-{/* <Grid container spacing={3} className={classes.list}>
-            {places?.map((place, i) => (
-              <Grid ref={elRefs[i]} key={i} item xs={12}>
-                <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} />
-              </Grid>
-            ))}
-          </Grid> */}
 export default List

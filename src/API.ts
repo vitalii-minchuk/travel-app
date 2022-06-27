@@ -1,6 +1,5 @@
-import { DataType } from './../types/types';
 import axios from "axios"
-import { PlaceType } from "../types/types";
+import { PlaceType } from "./react-app-env";
 
 const URL =  "https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary"
 
@@ -21,9 +20,7 @@ export const getPlacesData = async () => {
   try {
     
     const {data} = await axios.get<PlaceType>(URL, options)
-    
-    console.log(JSON.stringify(data?.data, null, 4))
-    
+   
     return data.data
     
   } catch (error) {
