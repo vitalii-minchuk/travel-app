@@ -27,9 +27,9 @@ const List: React.FC<ListProps> = ({ places }) => {
   }
 
   return (
-    <Box sx={{ height: "100%", padding: "16px" }} >
+    <Box sx={{height: "100%", padding: "16px"}} >
       <Typography variant="h5" component={"h2"} >Restaurants, Hotels and Attractions around you</Typography>
-      <Grid container spacing={1} sx={{width: "100%"}}>
+      <Grid container spacing={1} pb={2} sx={{width: "100%"}}>
         <Grid item xs={7}>
         <FormControl sx={{ my: 2, minWidth: 120 }}>
         <InputLabel id="type">Type</InputLabel>
@@ -64,7 +64,7 @@ const List: React.FC<ListProps> = ({ places }) => {
       </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{height: "60vh", overflow: "auto"}}>
+      <Grid container spacing={2} sx={{height: "65vh", overflow: "auto"}}>
         {places?.map((place, i) => (
           <Grid key={i} item xs={12} >
             <PlaceDetails place={place} />

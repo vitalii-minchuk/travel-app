@@ -18,22 +18,14 @@ const Map: React.FC<MapProps> = ({ coordinates, setCoordinates, setBounds }) => 
 
   const onChangeHandler = (value: ChangeEventValue) => {
     setCoordinates({ lat: value.center.lat, lng: value.center.lng })
-    setBounds({
-      ne: value.bounds.ne,
-      nw: value.bounds.nw,
-      se: value.bounds.se,
-      sw: value.bounds.sw
-    })
+    setBounds(value.marginBounds)
   }
 
   return (
     <div style={{height: "85vh", width: "100%"}}>
       <GoogleMapReact
         bootstrapURLKeys={{key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY!}}
-        defaultCenter={{
-          lat: 52.520007,
-          lng: 13.404954
-        }}
+        defaultCenter={coordinates}
         center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
