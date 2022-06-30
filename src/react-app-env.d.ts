@@ -1,6 +1,9 @@
 /// <reference types="react-scripts" />
 
 export type DataType = {
+  latitude: string
+  longitude: string
+  location_id: string
   photo: string,
   name: string,
   price: string,

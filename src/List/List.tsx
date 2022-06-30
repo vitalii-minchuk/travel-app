@@ -4,9 +4,11 @@ import Box from "@mui/material/Box"
 
 const List = () => {
   return (
-    <Box sx={wrapper}>
-      hel
-    </Box>
+    <React.Fragment>
+      <Box sx={wrapper}>
+        hel
+      </Box>
+    </React.Fragment>
   )
 }
 

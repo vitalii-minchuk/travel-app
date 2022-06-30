@@ -1,10 +1,41 @@
 import React from "react"
 import Header from "./Header/Header"
 import Stack from "@mui/material/Stack"
-import List from "./List/List";
-import Map from "./Map/Map";
+import List from "./List/List"
+import Map from "./Map/Map"
+import { getNearbyPlaces } from "./API"
+import { DataType } from "./react-app-env"
+import { isPersistedState } from "./helpers"
 
-function App() {
+const App: React.FC = () => {
+  const [places, setPlaces] = React.useState<DataType[]>([] as DataType[])
+  const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({ lat: 49.44862093112109, lng: 32.042534991043546})
+  const filteredPlaces = places.filter(place => place.photo)
+//   React.useEffect(() => {
+//     const fetchData = async () => {
+// console.log(clickedPos)      
+//       const data = await getNearbyPlaces(clickedPos.lat, clickedPos.lng)
+// console.log(data)
+//       setPlaces(data)
+//     }
+//     fetchData()
+//   }, [clickedPos])
+  
+  // React.useEffect(() => {
+  //   localStorage.setItem("homeState", JSON.stringify(places))
+  // }, [places])
+
+  React.useEffect(() => {
+    const sessionState = isPersistedState("homeState")
+
+      if (sessionState) {
+        setPlaces(sessionState)
+        return;
+      }
+  }, [])
+
+console.log(clickedPos)
+console.log(places)
   return (
     <React.Fragment>
       <Header />
@@ -14,7 +45,7 @@ function App() {
         sx={{height: "90vh", width: "100%"}}
       >
         <List />
-        <Map />
+        <Map filteredPlaces={filteredPlaces} setClickedPos={setClickedPos} clickedPos={clickedPos} />
       </Stack>
     </React.Fragment>
   )
