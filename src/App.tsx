@@ -6,6 +6,7 @@ import Map from "./Map/Map"
 import { getNearbyPlaces } from "./API"
 import { DataType } from "./react-app-env"
 import { isPersistedState } from "./helpers"
+import Container from "@mui/material/Container"
 
 const App: React.FC = () => {
   const [places, setPlaces] = React.useState<DataType[]>([] as DataType[])
@@ -39,14 +40,16 @@ console.log(places)
   return (
     <React.Fragment>
       <Header />
-      <Stack
-        direction={{ xs: 'column', md: 'row' }}
-        spacing={{xs: 1, md: 2 }}
-        sx={{height: "90vh", width: "100%"}}
-      >
-        <List />
-        <Map filteredPlaces={filteredPlaces} setClickedPos={setClickedPos} clickedPos={clickedPos} />
-      </Stack>
+      <Container maxWidth="lg">
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={{xs: 1, md: 2 }}
+          sx={{height: "86vh", width: "100%"}}
+        >
+          <List places={filteredPlaces} />
+          <Map filteredPlaces={filteredPlaces} setClickedPos={setClickedPos} clickedPos={clickedPos} />
+        </Stack>
+      </Container>
     </React.Fragment>
   )
 }

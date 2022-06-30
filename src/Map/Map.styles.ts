@@ -1,7 +1,7 @@
 export const wrapper = {
   width: {xs: "100%", md: "65%"},
   height: "100%",
-  padding: "10px"
+  padding: "0 8px"
 }
 
 export const mapContainer = {

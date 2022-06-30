@@ -4,7 +4,6 @@ export type DataType = {
   latitude: string
   longitude: string
   location_id: string
-  photo: string,
   name: string,
   price: string,
   ranking: string,
@@ -21,7 +20,7 @@ export type DataType = {
   rating: string
 }
 
-type PhotoType = {
+export type PhotoType = {
   images: PhotoSizeType
 }
 
@@ -39,6 +38,7 @@ type PhotoSizeType = {
 
 type AwardsType = {
   images: AwardsImgsType
+  display_name: string
 }
 
 type AwardsImgsType = {
