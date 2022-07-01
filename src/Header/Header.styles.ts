@@ -17,7 +17,7 @@ export const Search = styled("div")(({ theme }) => ({
 }))
 
 export const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  paddingg: theme.spacing(0, 2),
   height: "100%",
   position: "absolute",
   pointerEvents: "none",

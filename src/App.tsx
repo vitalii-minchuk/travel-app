@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactHTMLElement } from "react"
 import Header from "./Header/Header"
 import Stack from "@mui/material/Stack"
 import List from "./List/List"
@@ -9,9 +9,12 @@ import { isPersistedState } from "./helpers"
 import Container from "@mui/material/Container"
 
 const App: React.FC = () => {
+  const [childClicked, setChildClicked] = React.useState<DataType | null>(null)
+  const [type, setType] = React.useState("restaurants")
   const [places, setPlaces] = React.useState<DataType[]>([] as DataType[])
-  const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({ lat: 49.44862093112109, lng: 32.042534991043546})
+  const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({ lat: 50.0283513017548, lng: 36.225789008161755})
   const filteredPlaces = places.filter(place => place.photo)
+
 //   React.useEffect(() => {
 //     const fetchData = async () => {
 // console.log(clickedPos)      
@@ -35,6 +38,14 @@ const App: React.FC = () => {
       }
   }, [])
 
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setChildClicked(null)
+    }, 10000)
+    
+    return () => clearTimeout(timer)
+  }, [childClicked])
+
 console.log(clickedPos)
 console.log(places)
   return (
@@ -46,8 +57,19 @@ console.log(places)
           spacing={{xs: 1, md: 2 }}
           sx={{height: "86vh", width: "100%"}}
         >
-          <List places={filteredPlaces} />
-          <Map filteredPlaces={filteredPlaces} setClickedPos={setClickedPos} clickedPos={clickedPos} />
+          <List
+            childClicked={childClicked}
+            places={filteredPlaces}
+            setType={setType}
+            type={type}
+          />
+          <Map
+            type={type}
+            filteredPlaces={filteredPlaces}
+            setClickedPos={setClickedPos}
+            clickedPos={clickedPos}
+            setChildClicked={setChildClicked}
+          />
         </Stack>
       </Container>
     </React.Fragment>

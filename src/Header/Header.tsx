@@ -34,7 +34,7 @@ const  Header: React.FC = () => {
               {/* <Autocomplete> */}
                 <Search>
                   <SearchIconWrapper>
-                    <SearchIcon />
+                    <SearchIcon sx={{paddingLeft: "5px"}} />
                   </SearchIconWrapper>
                   <StyledInputBase
                     placeholder="Search…"
