@@ -42,9 +42,9 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
               {place.ranking}
             </Typography>
           </Box>
-          {place?.awards?.map((award, i) => (
+          {place?.awards?.map((award) => (
             <Box
-             key={i}
+             key={new Date().getUTCSeconds() * Math.random()}
              display="flex"
              gap={2}
              justifyContent="space-between"

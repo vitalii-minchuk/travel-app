@@ -39,6 +39,10 @@ const Map: React.FC<MapProps> = ({
   const [snackBarOpen, setSnackBarOpen] = React.useState(false);
   const [directions, setDirections] = React.useState<google.maps.DirectionsResult | null>(null)
   
+    React.useEffect(() => {
+      setDirections(null)
+    }, [type, clickedPos])
+
   const isMobile = useMediaQuery('(min-width: 900px)')
   
   const { isLoaded } = useJsApiLoader({
@@ -59,7 +63,6 @@ const Map: React.FC<MapProps> = ({
     if (event?.latLng?.lat()) {
       setClickedPos({lat: event?.latLng?.lat(), lng: event?.latLng?.lng()})
       setChildClicked(null)
-      setDirections(null)
     }
   }
 
@@ -134,9 +137,8 @@ const Map: React.FC<MapProps> = ({
                 <MarkerClusterer>
                   {(clusterer) =>  <>
                       {filteredPlaces.map(marker => (
-                       
                         <Marker
-                          key={marker.location_id}
+                          key={new Date().getUTCSeconds() * Math.random()}
                           position={{lat: Number(marker.latitude), lng: Number(marker.longitude)}}
                           icon={{
                             url: PlaceIcon(type),

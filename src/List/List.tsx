@@ -79,14 +79,13 @@ const List: React.FC<ListProps> = ({
                     <MenuItem value="500">0.5 km</MenuItem>
                     <MenuItem value="1000">1 km</MenuItem>
                     <MenuItem value="2000">2 km</MenuItem>
-                    <MenuItem value="3000">3 km</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{height: "100%"}}>
-              {places?.map((place, i) => (
-                <Grid key={i} item xs={12} >
+              {places?.map((place) => (
+                <Grid key={new Date().getUTCSeconds() * Math.random()} item xs={12} >
                   <PlaceDetails place={place} />
                 </Grid>
               ))}

@@ -18,23 +18,23 @@ const App: React.FC = () => {
   const [distance, setDistance] = React.useState("500")
   const [places, setPlaces] = React.useState<DataType[]>([] as DataType[])
   const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({ lat: 50.0283513017548, lng: 36.225789008161755})
-  const filteredPlaces = places.filter(place => place.photo)
+  const filteredPlaces = places.filter(place => place.photo?.images?.large?.url && place.photo?.images?.medium?.url)
 
 //   React.useEffect(() => {
 //     setIsLoading(true)
 //     const fetchData = async () => {
 // console.log(clickedPos)      
-//       const data = await getNearbyPlaces(clickedPos.lat, clickedPos.lng)
+//       const data = await getNearbyPlaces(clickedPos.lat, clickedPos.lng, type)
 // console.log(data)
 //       setPlaces(data)
 //       setIsLoading(false)
 //     }
 //     fetchData()
-//   }, [clickedPos])
+//   }, [clickedPos, type])
   
-  // React.useEffect(() => {
-  //   localStorage.setItem("homeState", JSON.stringify(places))
-  // }, [places])
+//   React.useEffect(() => {
+//     localStorage.setItem("homeState", JSON.stringify(places))
+//   }, [places])
 
   React.useEffect(() => {
     setIsLoading(true)
