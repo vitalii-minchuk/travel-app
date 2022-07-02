@@ -8,6 +8,8 @@ import { Circle,
   MarkerClusterer,
   useJsApiLoader } from "@react-google-maps/api"
 
+import { v4 as uuidv4 } from "uuid"
+
 import { wrapper, mapContainer, mapStyles, circleStyle } from "./Map.styles"
 import LinearProgress from "@mui/material/LinearProgress"
 import Box from "@mui/material/Box"
@@ -138,7 +140,7 @@ const Map: React.FC<MapProps> = ({
                   {(clusterer) =>  <>
                       {filteredPlaces.map(marker => (
                         <Marker
-                          key={new Date().getUTCSeconds() * Math.random()}
+                          key={uuidv4()}
                           position={{lat: Number(marker.latitude), lng: Number(marker.longitude)}}
                           icon={{
                             url: PlaceIcon(type),

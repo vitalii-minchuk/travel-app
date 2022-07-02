@@ -55,10 +55,9 @@ const App: React.FC = () => {
     return () => clearTimeout(timer)
   }, [childClicked])
 
-console.log(filteredPlaces)
   return (
     <React.Fragment>
-      <Header />
+      <Header setClickedPos={setClickedPos} />
       <Container maxWidth="lg">
         <Stack
           direction={{ xs: "column", md: "row" }}

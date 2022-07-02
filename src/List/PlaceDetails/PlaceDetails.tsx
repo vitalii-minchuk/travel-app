@@ -1,5 +1,7 @@
 import React from "react"
 
+import { v4 as uuidv4 } from "uuid"
+
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
@@ -44,7 +46,7 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
           </Box>
           {place?.awards?.map((award) => (
             <Box
-             key={new Date().getUTCSeconds() * Math.random()}
+             key={uuidv4()}
              display="flex"
              gap={2}
              justifyContent="space-between"
@@ -58,7 +60,7 @@ const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
             </Box>
           ))}
           {place?.cuisine?.map(({ name }) => (
-            <Chip key={name} size="small" label={name} sx={{margin: "5px 5px 5px 0"}} />
+            <Chip key={uuidv4()} size="small" label={name} sx={{margin: "5px 5px 5px 0"}} />
           ))}
           {place.address && (
             <Box

@@ -1,5 +1,7 @@
 import React from "react"
 
+import { v4 as uuidv4 } from "uuid"
+
 import { wrapper } from "./List.styles"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
@@ -85,7 +87,7 @@ const List: React.FC<ListProps> = ({
             </Grid>
             <Grid container spacing={2} sx={{height: "100%"}}>
               {places?.map((place) => (
-                <Grid key={new Date().getUTCSeconds() * Math.random()} item xs={12} >
+                <Grid key={uuidv4()} item xs={12} >
                   <PlaceDetails place={place} />
                 </Grid>
               ))}
