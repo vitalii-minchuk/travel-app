@@ -9,18 +9,22 @@ import { isPersistedState } from "./helpers"
 import Container from "@mui/material/Container"
 
 const App: React.FC = () => {
+  const [isLoading, setIsLoading] = React.useState(false)
   const [childClicked, setChildClicked] = React.useState<DataType | null>(null)
   const [type, setType] = React.useState("restaurants")
+  const [distance, setDistance] = React.useState("500")
   const [places, setPlaces] = React.useState<DataType[]>([] as DataType[])
   const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({ lat: 50.0283513017548, lng: 36.225789008161755})
   const filteredPlaces = places.filter(place => place.photo)
 
 //   React.useEffect(() => {
+//     setIsLoading(true)
 //     const fetchData = async () => {
 // console.log(clickedPos)      
 //       const data = await getNearbyPlaces(clickedPos.lat, clickedPos.lng)
 // console.log(data)
 //       setPlaces(data)
+//       setIsLoading(false)
 //     }
 //     fetchData()
 //   }, [clickedPos])
@@ -30,10 +34,12 @@ const App: React.FC = () => {
   // }, [places])
 
   React.useEffect(() => {
+    setIsLoading(true)
     const sessionState = isPersistedState("homeState")
 
       if (sessionState) {
         setPlaces(sessionState)
+        setIsLoading(false)
         return;
       }
   }, [])
@@ -41,12 +47,11 @@ const App: React.FC = () => {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       setChildClicked(null)
-    }, 10000)
+    }, 8000)
     
     return () => clearTimeout(timer)
   }, [childClicked])
 
-console.log(clickedPos)
 console.log(places)
   return (
     <React.Fragment>
@@ -61,7 +66,10 @@ console.log(places)
             childClicked={childClicked}
             places={filteredPlaces}
             setType={setType}
+            setDistance={setDistance}
+            distance={distance}
             type={type}
+            isLoading={isLoading}
           />
           <Map
             type={type}
@@ -69,6 +77,7 @@ console.log(places)
             setClickedPos={setClickedPos}
             clickedPos={clickedPos}
             setChildClicked={setChildClicked}
+            distance={distance}
           />
         </Stack>
       </Container>

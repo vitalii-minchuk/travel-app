@@ -9,26 +9,27 @@ import MenuItem from "@mui/material/MenuItem"
 import Grid from "@mui/material/Grid"
 import { DataType } from "../react-app-env"
 import PlaceDetails from "./PlaceDetails/PlaceDetails"
+import { LinearProgress } from "@mui/material"
 
 type ListProps = {
   places: DataType[]
   setType: React.Dispatch<React.SetStateAction<string>>
+  setDistance: React.Dispatch<React.SetStateAction<string>>
   type: string
   childClicked: DataType | null
+  isLoading: boolean
+  distance: string
 }
 
-const List: React.FC<ListProps> = ({ childClicked, places, setType, type }) => {
-  const [distance, setDistance] = React.useState("0.5")
-
-
-
+const List: React.FC<ListProps> = ({ isLoading, childClicked, places, setDistance, distance, setType, type }) => {
+  
   const handleTypeChange = (event: SelectChangeEvent) => {
     setType(event.target.value)
   }
   const handleDistanceChange = (event: SelectChangeEvent) => {
     setDistance(event.target.value)
   }
-console.log(childClicked)
+
   if (childClicked) return <Box sx={wrapper}>
       <PlaceDetails place={childClicked} />
   </Box>
@@ -39,48 +40,55 @@ console.log(childClicked)
         <Typography variant="h5" component={"h2"} >
           Restaurants, Hotels and Attractions around you
         </Typography>
-        <Grid container spacing={1} pb={2} sx={{width: "100%"}}>
-          <Grid item xs={7}>
-            <FormControl sx={{ my: 2, minWidth: 120 }}>
-              <InputLabel id="type">Type</InputLabel>
-              <Select
-                variant="standard"
-                id="type"
-                value={type}
-                label="Type"
-                onChange={handleTypeChange}
-              >
-                <MenuItem value="restaurants">Restaurants</MenuItem>
-                <MenuItem value="hotels">Hotels</MenuItem>
-                <MenuItem value="attractions">Attractions</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={5}>
-            <FormControl sx={{ my: 2, minWidth: 90 }}>
-              <InputLabel id="distance">Distance</InputLabel>
-              <Select
-                id="distance"
-                value={distance}
-                variant="standard"
-                label="Distance"
-                onChange={handleDistanceChange}
-              >
-                <MenuItem value="0.5">0.5 km</MenuItem>
-                <MenuItem value="1">1 km</MenuItem>
-                <MenuItem value="3">3 km</MenuItem>
-                <MenuItem value="5">5 km</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} sx={{height: "100%"}}>
-          {places?.map((place, i) => (
-            <Grid key={i} item xs={12} >
-              <PlaceDetails place={place} />
+        {isLoading ? (
+          <LinearProgress />
+        ) : (
+          <>
+            <Grid container spacing={1} pb={2} sx={{width: "100%"}}>
+              <Grid item xs={7}>
+                <FormControl sx={{ my: 2, minWidth: 120 }}>
+                  <InputLabel id="type">Type</InputLabel>
+                  <Select
+                    variant="standard"
+                    id="type"
+                    value={type}
+                    label="Type"
+                    onChange={handleTypeChange}
+                  >
+                    <MenuItem value="restaurants">Restaurants</MenuItem>
+                    <MenuItem value="hotels">Hotels</MenuItem>
+                    <MenuItem value="attractions">Attractions</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={5}>
+                <FormControl sx={{ my: 2, minWidth: 90 }}>
+                  <InputLabel id="distance">Distance</InputLabel>
+                  <Select
+                    id="distance"
+                    value={distance}
+                    variant="standard"
+                    label="Distance"
+                    onChange={handleDistanceChange}
+                  >
+                    <MenuItem value="500">0.5 km</MenuItem>
+                    <MenuItem value="1000">1 km</MenuItem>
+                    <MenuItem value="2000">2 km</MenuItem>
+                    <MenuItem value="3000">3 km</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
-          ))}
-        </Grid>
+            <Grid container spacing={2} sx={{height: "100%"}}>
+              {places?.map((place, i) => (
+                <Grid key={i} item xs={12} >
+                  <PlaceDetails place={place} />
+                </Grid>
+              ))}
+            </Grid>
+          </>
+        )}
+        
       </Box>
     </React.Fragment>
   )

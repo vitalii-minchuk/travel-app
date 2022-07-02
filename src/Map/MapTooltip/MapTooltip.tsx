@@ -19,16 +19,13 @@ const MapTooltip: React.FC<MapTooltipProps> = ({ hoveredMarker }) => {
           image={hoveredMarker.photo.images.medium.url}
           title={hoveredMarker.name}
         />
-        <CardContent>
-          <Typography maxWidth={100} variant="body2">{hoveredMarker.name}</Typography>
-          <Rating
-            size="small"
-            value={Number(hoveredMarker.rating)}
-            readOnly
-            precision={0.5}
-          />
-        </CardContent>
-          
+        <Typography maxWidth={100} variant="body2">{hoveredMarker.name}</Typography>
+        <Rating
+          size="small"
+          value={Number(hoveredMarker.rating)}
+          readOnly
+          precision={0.5}
+        />
       </Paper>
     </React.Fragment>
   )

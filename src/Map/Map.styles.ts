@@ -10,6 +10,18 @@ export const mapContainer = {
   height: "100%"
 }
 
+export const circleStyle ={
+  strokeOpacity: 0.5,
+  strokeWeight: 2,
+  clickable: false,
+  draggable: false,
+  editable: false,
+  visible: true,
+  fillOpacity: 0.25,
+  fillColor: "#88c34a",
+  strokeColor: "#88c34a"
+}
+
 // style from Snazzy Maps
 export const mapStyles =  [
   {
