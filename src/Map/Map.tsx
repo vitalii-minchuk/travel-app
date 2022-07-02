@@ -1,8 +1,18 @@
 import React from "react"
+
+import { Circle,
+  DirectionsRenderer,
+  GoogleMap,
+  InfoWindow,
+  Marker,
+  MarkerClusterer,
+  useJsApiLoader } from "@react-google-maps/api"
+
 import { wrapper, mapContainer, mapStyles, circleStyle } from "./Map.styles"
 import LinearProgress from "@mui/material/LinearProgress"
 import Box from "@mui/material/Box"
-import { Circle, DirectionsRenderer, GoogleMap, InfoWindow, Marker, useJsApiLoader } from "@react-google-maps/api"
+import { useMediaQuery } from "@mui/material"
+
 import { DataType } from "../react-app-env"
 import { PlaceIcon } from "../helpers"
 import CurrentLocation from "./CurrentLocationBtn/CurrentLocation"
@@ -18,10 +28,19 @@ type MapProps = {
   distance: string
 }
 
-const Map: React.FC<MapProps> = ({ distance, setChildClicked, setClickedPos, clickedPos, filteredPlaces, type }) => {
+const Map: React.FC<MapProps> = ({
+  distance,
+  setChildClicked,
+  setClickedPos,
+  clickedPos,
+  filteredPlaces,
+  type }) => {
   const [hoveredMarker, setHoveredMarker] = React.useState<DataType>({} as DataType)
-  const [open, setOpen] = React.useState(false);
+  const [snackBarOpen, setSnackBarOpen] = React.useState(false);
   const [directions, setDirections] = React.useState<google.maps.DirectionsResult | null>(null)
+  
+  const isMobile = useMediaQuery('(min-width: 900px)')
+  
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     language: "en",
@@ -29,11 +48,9 @@ const Map: React.FC<MapProps> = ({ distance, setChildClicked, setClickedPos, cli
   })
 
   const mapRef = React.useRef<google.maps.Map | null>(null)
-
   const onLoad = (map: google.maps.Map) : void => {
     mapRef.current = map
   }
-  
   const onUnmount = (): void => {
     mapRef.current = null
   }
@@ -46,9 +63,7 @@ const Map: React.FC<MapProps> = ({ distance, setChildClicked, setClickedPos, cli
     }
   }
 
-  const onMarkerHover = (marker: DataType): void => {
-    setHoveredMarker(marker)
-  }
+  const onMarkerHover = (marker: DataType): void => setHoveredMarker(marker)
 
   const moveTo = (position: google.maps.LatLngLiteral) => {
     if (mapRef.current) {
@@ -58,12 +73,14 @@ const Map: React.FC<MapProps> = ({ distance, setChildClicked, setClickedPos, cli
     }
   }
 
-  const mapCenter = React.useMemo(() => ({lat: clickedPos.lat, lng: clickedPos.lng}), [])
+  const mapCenter = React.useMemo(() => (
+    {lat: clickedPos.lat, lng: clickedPos.lng}
+  ), [clickedPos])
 
-  const clickHandler = (child: DataType, childPosition: google.maps.LatLngLiteral): void => {
+  const markerClickHandler = (child: DataType, childPosition: google.maps.LatLngLiteral): void => {
     setChildClicked(child)
     fetchDirections(childPosition)
-    setOpen(true)
+    setSnackBarOpen(true)
   }
 
   const fetchDirections = (position: google.maps.LatLngLiteral) => {
@@ -108,40 +125,56 @@ const Map: React.FC<MapProps> = ({ distance, setChildClicked, setClickedPos, cli
                       polylineOptions: {
                         zIndex: 50,
                         strokeColor: "teal",
-                        strokeWeight: 5
+                        strokeWeight: 2
                       }
                     }}
                   />
                 }
                 {clickedPos.lat ? <Marker position={clickedPos} /> : null}
+                <MarkerClusterer>
+                  {(clusterer) =>  <>
+                      {filteredPlaces.map(marker => (
+                       
+                        <Marker
+                          key={marker.location_id}
+                          position={{lat: Number(marker.latitude), lng: Number(marker.longitude)}}
+                          icon={{
+                            url: PlaceIcon(type),
+                            origin: new window.google.maps.Point(0, 0),
+                            anchor: new window.google.maps.Point(15, 15),
+                            scaledSize: new window.google.maps.Size(30, 30)
+                          }}
+                          onMouseOver={() => onMarkerHover(marker)}
+                          onMouseOut={() => setHoveredMarker({} as DataType)}
+                          onClick={() => markerClickHandler(marker,
+                            {lat: Number(marker.latitude), lng: Number(marker.longitude)})
+                          }
+                          clusterer={clusterer}
+                        />
+                      ))}
+                    </>
+                  }
+                </MarkerClusterer>
                 <Circle center={clickedPos} radius={+distance} options={circleStyle} />
-                {filteredPlaces?.map(marker => (
-                  <Marker
-                    key={marker.location_id}
-                    position={{lat: Number(marker.latitude), lng: Number(marker.longitude)}}
-                    icon={{
-                      url: PlaceIcon(type),
-                      origin: new window.google.maps.Point(0, 0),
-                      anchor: new window.google.maps.Point(15, 15),
-                      scaledSize: new window.google.maps.Size(30, 30)
-                    }}
-                    onMouseOver={() => onMarkerHover(marker)}
-                    onMouseOut={() => setHoveredMarker({} as DataType)}
-                    onClick={() => clickHandler(marker, {lat: Number(marker.latitude), lng: Number(marker.longitude)})}
-                  />
-                ))}
+                
                 {+hoveredMarker.latitude && (
                   <InfoWindow
-                    position={{lat: Number(hoveredMarker.latitude), lng: Number(hoveredMarker.longitude)}}
-                    
+                    position={{lat: Number(hoveredMarker.latitude),
+                      lng: Number(hoveredMarker.longitude)}
+                    }
                   >
-                    <MapTooltip hoveredMarker={hoveredMarker} />
+                    <MapTooltip hoveredMarker={hoveredMarker} isMobile={isMobile} />
                   </InfoWindow>
                 )}
             </GoogleMap>
             <CurrentLocation moveTo={moveTo} />
             {directions && 
-              <DistanceInfo leg={directions.routes[0].legs[0]} open={open} setOpen={setOpen} />
+              <DistanceInfo
+                leg={directions.routes[0].legs[0]}
+                open={snackBarOpen}
+                setOpen={setSnackBarOpen}
+                nowClosed={hoveredMarker.is_closed}
+              />
             }
           </>
         }

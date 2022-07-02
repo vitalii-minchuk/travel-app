@@ -1,12 +1,15 @@
-import React, { ReactHTMLElement } from "react"
-import Header from "./Header/Header"
+import React from "react"
+
+
+import Container from "@mui/material/Container"
 import Stack from "@mui/material/Stack"
+
+import Header from "./Header/Header"
 import List from "./List/List"
 import Map from "./Map/Map"
 import { getNearbyPlaces } from "./API"
 import { DataType } from "./react-app-env"
 import { isPersistedState } from "./helpers"
-import Container from "@mui/material/Container"
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false)
@@ -52,13 +55,13 @@ const App: React.FC = () => {
     return () => clearTimeout(timer)
   }, [childClicked])
 
-console.log(places)
+console.log(filteredPlaces)
   return (
     <React.Fragment>
       <Header />
       <Container maxWidth="lg">
         <Stack
-          direction={{ xs: 'column', md: 'row' }}
+          direction={{ xs: "column", md: "row" }}
           spacing={{xs: 1, md: 2 }}
           sx={{height: "86vh", width: "100%"}}
         >
@@ -85,4 +88,4 @@ console.log(places)
   )
 }
 
-export default App;
+export default App

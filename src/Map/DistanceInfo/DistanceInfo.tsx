@@ -1,4 +1,5 @@
 import React from "react"
+
 import Snackbar from "@mui/material/Snackbar"
 import IconButton from "@mui/material/IconButton"
 import CloseIcon from "@mui/icons-material/Close"
@@ -7,18 +8,21 @@ type DistanceInfoProps ={
   leg: google.maps.DirectionsLeg
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  nowClosed: boolean
 }
 
-export const DistanceInfo: React.FC<DistanceInfoProps> = ({ leg, open, setOpen }) => {
-  const message = `distance: ${leg.distance?.text}, walk: ${leg.duration?.text}`
+export const DistanceInfo: React.FC<DistanceInfoProps> = ({ leg, open, setOpen, nowClosed }) => {
+  const message = `distance: ${leg.distance?.text},
+   walk: ${leg.duration?.text}, 
+   ${nowClosed ? "now: closed" : "now: open"}`
 
   const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
 
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const action = (
     <React.Fragment>
@@ -31,7 +35,7 @@ export const DistanceInfo: React.FC<DistanceInfoProps> = ({ leg, open, setOpen }
         <CloseIcon fontSize="small" />
       </IconButton>
     </React.Fragment>
-  );
+  )
 
   return (
     <div>
@@ -41,9 +45,9 @@ export const DistanceInfo: React.FC<DistanceInfoProps> = ({ leg, open, setOpen }
         onClose={handleClose}
         message={message}
         action={action}
-        anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+        anchorOrigin={{vertical: "bottom", horizontal: "center"}}
       />
     </div>
-  );
+  )
 }
 

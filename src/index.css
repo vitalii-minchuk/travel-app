@@ -3,5 +3,8 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto" !important;
-  
+}
+
+.gm-style-iw button {
+  display: none !important;
 }

@@ -4,6 +4,4 @@ export const wrapper = {
   height: "100%",
   overflowY: "auto",
   padding: "0 8px",
-
-  
 }

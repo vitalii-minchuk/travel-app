@@ -1,4 +1,5 @@
 import React from "react"
+
 import { wrapper } from "./List.styles"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
@@ -6,10 +7,11 @@ import FormControl from "@mui/material/FormControl"
 import InputLabel from "@mui/material/InputLabel"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
-import Grid from "@mui/material/Grid"
+import LinearProgress from "@mui/material/LinearProgress"
+
 import { DataType } from "../react-app-env"
+import Grid from "@mui/material/Grid"
 import PlaceDetails from "./PlaceDetails/PlaceDetails"
-import { LinearProgress } from "@mui/material"
 
 type ListProps = {
   places: DataType[]
@@ -21,23 +23,26 @@ type ListProps = {
   distance: string
 }
 
-const List: React.FC<ListProps> = ({ isLoading, childClicked, places, setDistance, distance, setType, type }) => {
+const List: React.FC<ListProps> = ({
+  isLoading,
+  childClicked,
+  places,
+  setDistance,
+  distance,
+  setType,
+  type}) => {
   
-  const handleTypeChange = (event: SelectChangeEvent) => {
-    setType(event.target.value)
-  }
-  const handleDistanceChange = (event: SelectChangeEvent) => {
-    setDistance(event.target.value)
-  }
+  const handleTypeChange = (event: SelectChangeEvent) => setType(event.target.value)
+  const handleDistanceChange = (event: SelectChangeEvent) => setDistance(event.target.value)
 
   if (childClicked) return <Box sx={wrapper}>
-      <PlaceDetails place={childClicked} />
+    <PlaceDetails place={childClicked} />
   </Box>
 
   return (
     <React.Fragment>
       <Box sx={wrapper}>
-        <Typography variant="h5" component={"h2"} >
+        <Typography variant="h5" component={"h2"}>
           Restaurants, Hotels and Attractions around you
         </Typography>
         {isLoading ? (
@@ -88,14 +93,9 @@ const List: React.FC<ListProps> = ({ isLoading, childClicked, places, setDistanc
             </Grid>
           </>
         )}
-        
       </Box>
     </React.Fragment>
   )
-
-
-
-  
 }
 
 export default List

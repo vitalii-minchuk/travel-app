@@ -1,4 +1,5 @@
 import React from "react"
+
 import Button from "@mui/material/Button"
 import { Box } from "@mui/material"
 import { wrapper } from "./CurrentLocation.styles"
@@ -31,7 +32,6 @@ const CurrentLocation: React.FC<CurrentLocationProps> = ({ moveTo }) => {
           {disabled ? "Loading..." : "Get Current Geolocation"}
         </Button>
       </Box>
-      
     </React.Fragment>
   )
 }

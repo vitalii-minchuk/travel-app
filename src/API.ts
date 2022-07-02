@@ -11,7 +11,7 @@ const options = {
 }
 
 export const getNearbyPlaces = async (lat: number, lng: number): Promise<DataType[]> => {
-  const response = await fetch(`${URL}?latitude=${lat}&longitude=${lng}&limit=30&currency=USD&distance=2&open_now=false&lunit=km&lang=en_US`, options)
+  const response = await fetch(`${URL}?latitude=${lat}&longitude=${lng}&limit=30&currency=USD&distance=3&open_now=false&lunit=km&lang=en_US`, options)
   
   if (!response.ok) {
     throw new Error("Oh no! Something messed up!")

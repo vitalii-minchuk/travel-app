@@ -1,6 +1,7 @@
 /// <reference types="react-scripts" />
 
 export type DataType = {
+  is_closed: boolean
   latitude: string
   longitude: string
   location_id: string
