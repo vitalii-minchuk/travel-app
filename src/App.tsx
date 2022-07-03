@@ -1,6 +1,5 @@
 import React from "react"
 
-
 import Container from "@mui/material/Container"
 import Stack from "@mui/material/Stack"
 
@@ -9,7 +8,6 @@ import List from "./List/List"
 import Map from "./Map/Map"
 import { getNearbyPlaces } from "./API"
 import { DataType } from "./react-app-env"
-import { isPersistedState } from "./helpers"
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false)
@@ -20,32 +18,16 @@ const App: React.FC = () => {
   const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({ lat: 50.0283513017548, lng: 36.225789008161755})
   const filteredPlaces = places.filter(place => place.photo?.images?.large?.url && place.photo?.images?.medium?.url)
 
-//   React.useEffect(() => {
-//     setIsLoading(true)
-//     const fetchData = async () => {
-// console.log(clickedPos)      
-//       const data = await getNearbyPlaces(clickedPos.lat, clickedPos.lng, type)
-// console.log(data)
-//       setPlaces(data)
-//       setIsLoading(false)
-//     }
-//     fetchData()
-//   }, [clickedPos, type])
-  
-//   React.useEffect(() => {
-//     localStorage.setItem("homeState", JSON.stringify(places))
-//   }, [places])
-
   React.useEffect(() => {
     setIsLoading(true)
-    const sessionState = isPersistedState("homeState")
+    const fetchData = async () => {
+      const data = await getNearbyPlaces(clickedPos.lat, clickedPos.lng, type)
 
-      if (sessionState) {
-        setPlaces(sessionState)
-        setIsLoading(false)
-        return;
-      }
-  }, [])
+      setPlaces(data)
+      setIsLoading(false)
+    }
+    fetchData()
+  }, [clickedPos, type])
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
