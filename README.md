@@ -1,1 +1,1 @@
-https://tmovdb.netlify.app
+https://easytrav.netlify.app/
